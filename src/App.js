@@ -11,19 +11,20 @@ import {
   VerticalTimelineElement
 } from 'react-vertical-timeline-component'
 import 'react-vertical-timeline-component/style.min.css'
-
+import {AnimatePresence,motion} from  'framer-motion'
 import athira from './img/athira.JPG'
 function App () {
   const [isActive, setActive] = useState(false)
   const [isSelected, setSelected] = useState(false)
   return (
+    <AnimatePresence>
     <div className='App'>
       <div className=' w-screen h-screen flex-col bg-Primary'>
         {/* NAV BAR  */}
         <nav className='w-full fixed px-1 md:px-6 z-50 inset-x-0 top-8 flex justify-center items-center  '>
           <div className='w-full md:w-880 bg-Navbar flex  rounded-2xl p-3 md:p-6  '>
             <p className='text-white text-md font-semibold font-serif mr-auto'>
-              Adarsh K
+              Athira K
             </p>
             <div className='hidden md:flex gap-5'>
               <a
@@ -39,29 +40,35 @@ function App () {
                 About
               </a>
               <a
-                href=''
+                href='#projects'
                 className='text-slate-500 text-lg font-semibold hover:text-white'
               >
                 Projects
               </a>
               <a
-                href=''
+                href='#contact'
                 className='text-slate-500 text-lg font-semibold hover:text-white'
               >
-                PortFolio
+                contact
               </a>
               <div className='ml-auto text-gray-900 text-lg rounded border-slate-400 bg-slate-500 px-2 hover:text-white'>
                 <button>Download</button>
               </div>
             </div>
-            <div
+            <motion.div
+            whileTap={{scale:.75}}
               className='block md:hidden cursor-pointer'
               onClick={() => setActive(prev => !prev)}
             >
               <FiMenu className='text-2xl  text-white' />
-            </div>
+            </motion.div>
             {isActive && (
-              <div className='flex flex-col md:hidden w-full h-auto fixed top-[82px] items-center'>
+              <motion.div 
+              initial={{opacity:0,scale:0.5}}
+              animate={{opacity:1,scale:1.1}}
+              exit={{opacity:0,scale:0.5}}
+              transition={{delay:"0.2s",type:"spring" }}
+              className='flex flex-col md:hidden w-full h-auto fixed top-[82px] items-center'>
                 <div className='flex flex-col gap-4 py-2 w-80 bg-Navbar'>
                   <div onClick={() => setActive(false)}>
                     <a
@@ -100,23 +107,23 @@ function App () {
                     <button>Download</button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
           </div>
         </nav>
 
         {/* Animation Added */}
-        <div className='h-screen w-screen overflow-hidden bg-Primary'>
+        <div className='h-screen w-screen  bg-Primary'>
           <Spline scene='https://prod.spline.design/MJfFjUoWLYK8CoPs/scene.splinecode' />
           <div className='absolute bottom-5 right-16'>
             <div className='rounded-md bg-slate-500'>
-              <p className='text-base font-semibold'>Press And Drag To Orbit</p>
+              <p className='text-base font-semibold'>Hover On Animation Screen</p>
             </div>
           </div>
         </div>
       </div>
       {/* main section */}
-      <main className='w-full px-3 md:px-20 mt-4'>
+      <main className='w-full px-3 md:px-20 mt-4 bg-white'>
         {/* about */}
         <section
           id='about'
@@ -219,7 +226,7 @@ function App () {
           </VerticalTimeline>
         </section>
         {/* Project section */}
-        <section className='w-screen flex flex-wrap my-20 gap-8 items-center justify-center bg-Navbar py-8 px-3'>
+        <section id='projects' className='w-screen flex flex-wrap my-20 gap-8 items-center justify-center bg-Navbar py-8 px-3'>
           {
             project && project.map((item)=>{
               return(
@@ -232,9 +239,9 @@ function App () {
               alt=''
               className='rounded-md border-2 border-zinc-400 h-[200px]'
             />
-            <div className='flex flex-row gap-3 justify-between items-center '>
-              <div className='flex flex-col gap-2'>
-                <p className='text-lg text-white font-semibold '>
+            <div className='flex flex-row gap-3 justify-between'>
+              <div className='flex flex-col gap-2 items-start'>
+                <p className='text-lg text-white font-semibold'>
                   Technologies
                 </p>
                 <span className='text-sm font-semibold text-gray-500'>
@@ -242,9 +249,11 @@ function App () {
                 </span>
               </div>
               <a href=''>
-                <div>
+                <motion.div
+                whileTap={{scale:0.8}}
+                >
                   <AiFillGithub className='text-3xl text-white' />
-                </div>
+                </motion.div>
               </a>
             </div>
           </div>
@@ -255,20 +264,22 @@ function App () {
 
         {/* contact section  */}
 
-        <section className='w-screen my-20 flex flex-col gap-8 py-6 px-3 md:px-10 md-px-16 items-center justify-center'>
+        <section id="contact" className='w-screen my-20 flex flex-col gap-8 py-6  md:px-10  items-center'>
            <p className='text-2xl text-gray-500 font-semibold'>Follow Me On</p>
           
           <div div className='flex flex-wrap gap-8 '>
             {
               socials && socials.map((item)=>{
                 return(
-                  <div className='flex w-full md:w-auto gap-11 md:gap-3 mx-6 md:mx-0 items-center justify-center' >
+                  <motion.div 
+                  whileTap={{scale:0.8}}
+                  className='flex w-full md:w-auto gap-11 md:gap-3 mx-6 md:mx-0 items-center justify-center' >
 
               <a href='#'>
                 {item.icon}
               </a>
               <p className='font-bold font-serif text-md md:text-lg'>{item.name}</p>
-            </div>
+            </motion.div>
                 )
               })
             }
@@ -277,6 +288,7 @@ function App () {
         </section>
       </main>
     </div>
+    </AnimatePresence>
   )
 }
 
